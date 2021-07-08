@@ -13,13 +13,17 @@ soup = page.soup
 ads = soup.find_all(class_="ListContent-sc-1viyr2k-0")
 
 # build the dict to insert in the databse
-# features: size, price, city, image, link, description
+# features: size, door, rooms, price, city, image, link, description
 estates = []
 for ad in ads:
+    print("-"*70)
     estate = {}
 
     #type
-    # estate['type'] =
+    type_ = ad.find(class_="ContentZone__Title-wghbmy-5")
+    if(type_ != None):
+        estate['type'] = type_.get_text()
+        print(estate['type'])
 
     #price
     price = ad.find(class_="Price__Label-sc-1g9fitq-1")
@@ -27,8 +31,16 @@ for ad in ads:
         estate['price'] = price.get_text()
         print(price.get_text())
 
-    #size
-    # estate['size'] =
+    #size, rooms, doors
+    specs = ad.find("ul")
+    if(specs != None):
+        specs = specs.find_all('li')
+        estate['doors'] = specs[0].get_text()
+        estate['rooms'] = specs[1].get_text()
+        estate['size'] = specs[2].get_text()
+        print(estate['doors'])
+        print(estate['rooms'])
+        print(estate['size'])
 
     #city
     # estate['city'] =
