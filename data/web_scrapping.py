@@ -35,20 +35,35 @@ for ad in ads:
     specs = ad.find("ul")
     if(specs != None):
         specs = specs.find_all('li')
-        estate['doors'] = specs[0].get_text()
-        estate['rooms'] = specs[1].get_text()
-        estate['size'] = specs[2].get_text()
-        print(estate['doors'])
-        print(estate['rooms'])
-        print(estate['size'])
+        if(len(specs) >= 1):
+            estate['doors'] = specs[0].get_text()
+            print(estate['doors'])
+        if(len(specs) >= 2):
+            estate['rooms'] = specs[1].get_text()
+            print(estate['rooms'])
+        if(len(specs) >= 3):
+            estate['size'] = specs[2].get_text()
+            print(estate['size'])
 
     #city
-    # estate['city'] =
+    city = ad.find(class_="ContentZone__Address-wghbmy-1 dlWlag")
+    if(city != None):
+        estate['city'] = city.find("span").get_text()
+        print(estate['city'])
+
+    #zone
+    
 
     #image
-    # estate['image'] =
+    image = ad.find('img')
+    if(image != None):
+        estate['image'] = image['src']
+        print(estate['image'])
 
     #description
-    # estate['description'] =
+    desc = ad.find(class_='Card__Description-sc-7insep-6')
+    if(desc != None):
+        estate['description'] = desc.get_text()
+        print(estate['description'])
 
     estates.append(estate)
