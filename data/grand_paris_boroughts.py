@@ -15,7 +15,7 @@ departments = [city.find(class_="label").get_text() for city in cities]
 
 boroughts = pd.DataFrame({
     "name": names,
-    "departments": departments
+    "department": departments
 })
 
 # print(boroughts.head())
