@@ -1,132 +1,132 @@
 ,name,department
-0,Ablon-sur-Seine  ,94
-1,Alfortville  ,94
-2,Antony  ,92
-3,Arcueil  ,94
-4,Argenteuil  ,95
-5,Asnières-sur-Seine  ,92
-6,Athis-Mons  ,91
-7,Aubervilliers  ,93
-8,Aulnay-sous-Bois  ,93
-9,Bagneux  ,92
-10,Bagnolet  ,93
-11,Bobigny  ,93
-12,Bois-Colombes  ,92
-13,Boissy-Saint-Léger  ,94
-14,Bondy  ,93
-15,Bonneuil-sur-Marne  ,94
-16,Boulogne-Billancourt  ,92
-17,Bourg-la-Reine  ,92
-18,Bry-sur-Marne  ,94
-19,Cachan  ,94
-20,Champigny-sur-Marne  ,94
-21,Charenton-le-Pont  ,94
-22,Châtenay-Malabry  ,92
-23,Châtillon  ,92
-24,Chaville  ,92
-25,Chennevières-sur-Marne  ,94
-26,Chevilly-Larue  ,94
-27,Choisy-le-Roi  ,94
-28,Clamart  ,92
-29,Clichy  ,92
-30,Clichy-sous-Bois  ,93
-31,Colombes  ,92
-32,Coubron  ,93
-33,Courbevoie  ,92
-34,Créteil  ,94
-35,Drancy  ,93
-36,Dugny  ,93
-37,Épinay-sur-Seine  ,93
-38,Fontenay-aux-Roses  ,92
-39,Fontenay-sous-Bois  ,94
-40,Fresnes  ,94
-41,Gagny  ,93
-42,Garches  ,92
-43,Gennevilliers  ,92
-44,Gentilly  ,94
-45,Gournay-sur-Marne  ,93
-46,Issy-les-Moulineaux  ,92
-47,Ivry-sur-Seine  ,94
-48,Joinville-le-Pont  ,94
-49,Juvisy-sur-Orge  ,91
-50,L'Haÿ-les-Roses  ,94
-51,L'Île-Saint-Denis  ,93
-52,La Courneuve  ,93
-53,La Garenne-Colombes  ,92
-54,La Queue-en-Brie  ,94
-55,Le Blanc-Mesnil  ,93
-56,Le Bourget  ,93
-57,Le Kremlin-Bicêtre  ,94
-58,Le Perreux-sur-Marne  ,94
-59,Le Plessis-Robinson  ,92
-60,Le Plessis-Trévise  ,94
-61,Le Pré-Saint-Gervais  ,93
-62,Le Raincy  ,93
-63,Les Lilas  ,93
-64,Les Pavillons-sous-Bois  ,93
-65,Levallois-Perret  ,92
-66,Limeil-Brévannes  ,94
-67,Livry-Gargan  ,93
-68,Maisons-Alfort  ,94
-69,Malakoff  ,92
-70,Mandres-les-Roses  ,94
-71,Marnes-la-Coquette  ,92
-72,Marolles-en-Brie  ,94
-73,Meudon  ,92
-74,Montfermeil  ,93
-75,Montreuil  ,93
-76,Montrouge  ,92
-77,Morangis  ,91
-78,Nanterre  ,92
-79,Neuilly-Plaisance  ,93
-80,Neuilly-sur-Marne  ,93
-81,Neuilly-sur-Seine  ,92
-82,Nogent-sur-Marne  ,94
-83,Noiseau  ,94
-84,Noisy-le-Grand  ,93
-85,Noisy-le-Sec  ,93
-86,Orly  ,94
-87,Ormesson-sur-Marne  ,94
-88,Pantin  ,93
-89,Paray-Vieille-Poste  ,91
-90,Paris  ,75
-91,Périgny  ,94
-92,Pierrefitte-sur-Seine  ,93
-93,Puteaux  ,92
-94,Romainville  ,93
-95,Rosny-sous-Bois  ,93
-96,Rueil-Malmaison  ,92
-97,Rungis  ,94
-98,Saint-Cloud  ,92
-99,Saint-Denis  ,93
-100,Saint-Mandé  ,94
-101,Saint-Maur-des-Fossés  ,94
-102,Saint-Maurice  ,94
-103,Saint-Ouen-sur-Seine  ,93
-104,Santeny  ,94
-105,Savigny-sur-Orge  ,91
-106,Sceaux  ,92
-107,Sevran  ,93
-108,Sèvres  ,92
-109,Stains  ,93
-110,Sucy-en-Brie  ,94
-111,Suresnes  ,92
-112,Thiais  ,94
-113,Tremblay-en-France  ,93
-114,Valenton  ,94
-115,Vanves  ,92
-116,Vaucresson  ,92
-117,Vaujours  ,93
-118,Ville-d'Avray  ,92
-119,Villecresnes  ,94
-120,Villejuif  ,94
-121,Villemomble  ,93
-122,Villeneuve-la-Garenne  ,92
-123,Villeneuve-le-Roi  ,94
-124,Villeneuve-Saint-Georges  ,94
-125,Villepinte  ,93
-126,Villetaneuse  ,93
-127,Villiers-sur-Marne  ,94
-128,Vincennes  ,94
-129,Viry-Châtillon  ,91
-130,Vitry-sur-Seine  ,94
+0,Ablon-sur-Seine,94
+1,Alfortville,94
+2,Antony,92
+3,Arcueil,94
+4,Argenteuil,95
+5,Asnières-sur-Seine,92
+6,Athis-Mons,91
+7,Aubervilliers,93
+8,Aulnay-sous-Bois,93
+9,Bagneux,92
+10,Bagnolet,93
+11,Bobigny,93
+12,Bois-Colombes,92
+13,Boissy-Saint-Léger,94
+14,Bondy,93
+15,Bonneuil-sur-Marne,94
+16,Boulogne-Billancourt,92
+17,Bourg-la-Reine,92
+18,Bry-sur-Marne,94
+19,Cachan,94
+20,Champigny-sur-Marne,94
+21,Charenton-le-Pont,94
+22,Châtenay-Malabry,92
+23,Châtillon,92
+24,Chaville,92
+25,Chennevières-sur-Marne,94
+26,Chevilly-Larue,94
+27,Choisy-le-Roi,94
+28,Clamart,92
+29,Clichy,92
+30,Clichy-sous-Bois,93
+31,Colombes,92
+32,Coubron,93
+33,Courbevoie,92
+34,Créteil,94
+35,Drancy,93
+36,Dugny,93
+37,Épinay-sur-Seine,93
+38,Fontenay-aux-Roses,92
+39,Fontenay-sous-Bois,94
+40,Fresnes,94
+41,Gagny,93
+42,Garches,92
+43,Gennevilliers,92
+44,Gentilly,94
+45,Gournay-sur-Marne,93
+46,Issy-les-Moulineaux,92
+47,Ivry-sur-Seine,94
+48,Joinville-le-Pont,94
+49,Juvisy-sur-Orge,91
+50,L'Haÿ-les-Roses,94
+51,L'Île-Saint-Denis,93
+52,La Courneuve,93
+53,La Garenne-Colombes,92
+54,La Queue-en-Brie,94
+55,Le Blanc-Mesnil,93
+56,Le Bourget,93
+57,Le Kremlin-Bicêtre,94
+58,Le Perreux-sur-Marne,94
+59,Le Plessis-Robinson,92
+60,Le Plessis-Trévise,94
+61,Le Pré-Saint-Gervais,93
+62,Le Raincy,93
+63,Les Lilas,93
+64,Les Pavillons-sous-Bois,93
+65,Levallois-Perret,92
+66,Limeil-Brévannes,94
+67,Livry-Gargan,93
+68,Maisons-Alfort,94
+69,Malakoff,92
+70,Mandres-les-Roses,94
+71,Marnes-la-Coquette,92
+72,Marolles-en-Brie,94
+73,Meudon,92
+74,Montfermeil,93
+75,Montreuil,93
+76,Montrouge,92
+77,Morangis,91
+78,Nanterre,92
+79,Neuilly-Plaisance,93
+80,Neuilly-sur-Marne,93
+81,Neuilly-sur-Seine,92
+82,Nogent-sur-Marne,94
+83,Noiseau,94
+84,Noisy-le-Grand,93
+85,Noisy-le-Sec,93
+86,Orly,94
+87,Ormesson-sur-Marne,94
+88,Pantin,93
+89,Paray-Vieille-Poste,91
+90,Paris,75
+91,Périgny,94
+92,Pierrefitte-sur-Seine,93
+93,Puteaux,92
+94,Romainville,93
+95,Rosny-sous-Bois,93
+96,Rueil-Malmaison,92
+97,Rungis,94
+98,Saint-Cloud,92
+99,Saint-Denis,93
+100,Saint-Mandé,94
+101,Saint-Maur-des-Fossés,94
+102,Saint-Maurice,94
+103,Saint-Ouen-sur-Seine,93
+104,Santeny,94
+105,Savigny-sur-Orge,91
+106,Sceaux,92
+107,Sevran,93
+108,Sèvres,92
+109,Stains,93
+110,Sucy-en-Brie,94
+111,Suresnes,92
+112,Thiais,94
+113,Tremblay-en-France,93
+114,Valenton,94
+115,Vanves,92
+116,Vaucresson,92
+117,Vaujours,93
+118,Ville-d'Avray,92
+119,Villecresnes,94
+120,Villejuif,94
+121,Villemomble,93
+122,Villeneuve-la-Garenne,92
+123,Villeneuve-le-Roi,94
+124,Villeneuve-Saint-Georges,94
+125,Villepinte,93
+126,Villetaneuse,93
+127,Villiers-sur-Marne,94
+128,Vincennes,94
+129,Viry-Châtillon,91
+130,Vitry-sur-Seine,94
