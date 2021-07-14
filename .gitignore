@@ -127,3 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# specific files
+connect.py
+data_requests.py
+sample_*
