@@ -132,3 +132,5 @@ dmypy.json
 connect.py
 data_requests.py
 sample_*
+settings.py
+.DS_Store
