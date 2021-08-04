@@ -130,7 +130,9 @@ dmypy.json
 
 # specific files
 connect.py
+csv_requests.py
 data_requests.py
+data_requests_csv.py
 sample_*
 settings.py
 .DS_Store

@@ -3,7 +3,7 @@ from django.db import models
 class Estate(models.Model):
     title = models.CharField(max_length=200)
     price = models.IntegerField(default=0)
-    size = models.IntegerField(default=0)
+    size = models.IntegerField(default=1)
     image = models.CharField(max_length=250)
     rooms = models.IntegerField(default=1)
     location = models.CharField(max_length=200)
