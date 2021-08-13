@@ -17,11 +17,14 @@ class IndexView(generic.ListView):
     """Return the last 5 estates"""
     def get_queryset(self):
         result = []
-        data = pd.read_csv("../data/grand_paris_estates.csv")
-        subset = data[data["type"].notna()][["type", "price"]]
-        subset["id"] = range(len(subset))
-        subset = subset.rename(columns={"type":"title"})
-        return subset.head().to_dict('records')
+        client = Connect.get_connection()
+        db = client.grand_paris_estates_unified
+        cursor = db.inventory.find({"image": {"$ne":float('nan')}})
+        for inventory in cursor:
+            to_add = inventory
+            to_add["id"] = str(inventory["_id"])
+            result.append(to_add)
+        return result[:20]
 
 class DetailView(generic.DetailView):
     model = Estate

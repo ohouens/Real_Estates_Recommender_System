@@ -4,15 +4,18 @@
   <head>
     <meta charset="utf-8">
     <title>Estates' list</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'adverts/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'adverts/style/base.css' %}">
   </head>
   <body>
   {% if latest_estate_list %}
-      <ul>
+      <div id="container">
       {% for estate in latest_estate_list %}
-          <li><a href="{% url 'adverts:detail' estate.id %}">{{ estate.title }}</a></li>
+          <div class="item">
+            <img src="{{ estate.image }}" alt="preview image"><br>
+            <a href="{% url 'adverts:detail' estate.id %}">{{ estate.rooms}} rooms {{ estate.type }} at {{ estate.city }}</a>
+          </div>
       {% endfor %}
-      </ul>
+    </div>
   {% else %}
       <p>No estates are available.</p>
   {% endif %}
