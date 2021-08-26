@@ -28,9 +28,15 @@ def detail(request, estate_id):
     try:
         client = Connect.get_connection()
         db = client.grand_paris_estates_unified
+        result = []
+        recommendation = db.inventory.find({"image": {"$ne":float('nan')}})
+        for inventory in recommendation:
+            to_add = inventory
+            to_add["id"] = str(inventory["_id"])
+            result.append(to_add)
+        estate_list = result[:20]
         cursor = db.inventory.find_one({"_id":ObjectId(estate_id)})
-        # current = list(cursor)[0]
-        context = {"cursor":cursor}
+        context = {"cursor":cursor, "estate_list":estate_list}
     except Exception:
         raise Http404("Estate not found")
     return render(request, "adverts/detail.html", context)
