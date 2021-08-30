@@ -36,6 +36,7 @@ def detail(request, estate_id):
             result.append(to_add)
         estate_list = result[:20]
         cursor = db.inventory.find_one({"_id":ObjectId(estate_id)})
+        cursor["eperm2"] = int(int(cursor["price"][:-2].replace(" ",""))/int(cursor["size"]))
         context = {"cursor":cursor, "estate_list":estate_list}
     except Exception:
         raise Http404("Estate not found")

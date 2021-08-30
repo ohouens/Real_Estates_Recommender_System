@@ -135,4 +135,5 @@ data_requests.py
 data_requests_csv.py
 sample_*
 settings.py
+jquery*
 .DS_Store

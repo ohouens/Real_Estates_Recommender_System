@@ -4,6 +4,32 @@
   text-align: center;
 }
 
+.align{
+  display: inline-block;
+  vertical-align: top;
+}
+
+.flex{
+  display: flex;
+}
+
+hr{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+button{
+  color: white;
+  background-color: #eb2009;
+  min-width: 150px;
+  min-height: 30px;
+  border: none;
+  border-radius: 400px;
+}button:hover{
+  cursor: pointer;
+  background-color: #c71400;
+}
+
 header, footer{
   height: 10vh;
   background-color: black;

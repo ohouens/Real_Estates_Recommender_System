@@ -1,0 +1,19 @@
+#pin{
+  width: 70%;
+  font-size: 1em;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+}
+#pin img{
+  width: 60%;
+}
+#pin hr{
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#recommendation{
+  width: 30%;
+  font-size: 1em;
+}
