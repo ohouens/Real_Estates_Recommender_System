@@ -34,8 +34,9 @@ def detail(request, estate_id):
             to_add = inventory
             to_add["id"] = str(inventory["_id"])
             result.append(to_add)
-        estate_list = result[:20]
+        estate_list = result[:3]
         cursor = db.inventory.find_one({"_id":ObjectId(estate_id)})
+        cursor["rooms"] = int(cursor["rooms"])
         cursor["eperm2"] = int(int(cursor["price"][:-2].replace(" ",""))/int(cursor["size"]))
         context = {"cursor":cursor, "estate_list":estate_list}
     except Exception:

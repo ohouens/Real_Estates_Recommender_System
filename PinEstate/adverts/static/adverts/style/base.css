@@ -70,3 +70,8 @@ footer a{
 .item a {
   color: purple;
 }
+
+#title{
+  color: white;
+  text-decoration: none;
+}

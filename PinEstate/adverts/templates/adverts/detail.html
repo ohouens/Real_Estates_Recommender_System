@@ -11,7 +11,9 @@
   <body>
     <header>
       <div class="center">
-        <h1>PinEstates</h1>
+        <a id="title" href="{% url 'adverts:index' %}">
+          <h1>PinEstates</h1>
+        </a>
       </div>
     </header>
     <div id="container" class="flex">
@@ -28,7 +30,7 @@
         <hr>
         <p id="estate_details">
           {{ cursor.rooms }} rooms<br>
-          <span class="price">{{ cursor.price }}€</span><br>
+          <span class="price">{{ cursor.price }}</span><br>
           {{ cursor.size }}m2 <=> {{cursor.eperm2}}€/m2
         </p>
       </div>
