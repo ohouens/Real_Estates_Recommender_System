@@ -1,3 +1,6 @@
+import random
+import os, binascii
+
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.views import generic
@@ -8,21 +11,33 @@ from .connect import Connect
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
-class IndexView(generic.ListView):
-    template_name = "adverts/index.html"
-    context_object_name = "latest_estate_list"
-
-    """Return the last 20 estates"""
-    def get_queryset(self):
-        result = []
-        client = Connect.get_connection()
-        db = client.grand_paris_estates_unified
+def index(request):
+    result = []
+    client = Connect.get_connection()
+    db = client.grand_paris_estates_unified
+    context = dict()
+    if not request.COOKIES.get("user"):
         cursor = db.inventory.find({"image": {"$ne":float('nan')}})
         for inventory in cursor:
             to_add = inventory
             to_add["id"] = str(inventory["_id"])
             result.append(to_add)
-        return result[:20]
+        key = binascii.b2a_hex(os.urandom(15)).decode("utf-8")
+        context = {"latest_estate_list": random.sample(result,20), "user":"000"}
+        response = render(request, "adverts/index.html", context)
+        response.set_cookie("user", key)
+        user_db = client.grand_paris_estates_users
+        user_db.inventory.insert_one({"user":key})
+        return response
+    else:
+        cursor = db.inventory.find({"image": {"$ne":float('nan')}})
+        for inventory in cursor:
+            to_add = inventory
+            to_add["id"] = str(inventory["_id"])
+            result.append(to_add)
+        context = {"latest_estate_list": random.sample(result,20), "user":request.COOKIES['user']}
+        response = render(request, "adverts/index.html", context)
+        return response
 
 def detail(request, estate_id):
     try:
@@ -34,9 +49,10 @@ def detail(request, estate_id):
             to_add = inventory
             to_add["id"] = str(inventory["_id"])
             result.append(to_add)
-        estate_list = result[:3]
+        estate_list = random.sample(result,3)
         cursor = db.inventory.find_one({"_id":ObjectId(estate_id)})
         cursor["rooms"] = int(cursor["rooms"])
+        cursor["id"] = str(cursor["_id"])
         cursor["eperm2"] = int(int(cursor["price"][:-2].replace(" ",""))/int(cursor["size"]))
         context = {"cursor":cursor, "estate_list":estate_list}
     except Exception:

@@ -17,7 +17,7 @@
       </div>
     </header>
     <div id="container" class="flex">
-      <div id="pin" class="align">
+      <div id="pin" class="align" estate="{{ cursor.id }}">
         <a href="{{ cursor.link }}" target="_blank">
           <img src="{{ cursor.image }}" alt="preview image" class="wallpaper">
         </a>
@@ -39,7 +39,7 @@
         <h2>More like this</h2>
         <div class="display">
         {% for estate in estate_list %}
-          <div class="item">
+          <div class="item" estate="{{ estate.id }}">
             <img src="{{ estate.image }}" alt="preview image"><br>
             <a href="{% url 'adverts:detail' estate.id %}">{{ estate.rooms}} rooms {{ estate.type }} at {{ estate.city }}</a>
           </div>
