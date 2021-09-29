@@ -4,11 +4,16 @@ $(function(){
   });
 
   $("#pin a").click(function(e){
-    // e.preventDefault();
+    e.preventDefault();
     alert('add click to database');
   });
 
   $(".item").click(function(e){
-    alert("save "+$(this).attr("estate")+" from "+$("#pin").attr("estate"))
+    e.preventDefault();
+    url = "join/"+$(this).attr("estate");
+    item = $(this);
+    $.get(url, function(data){
+      document.location.href = "../.."+item.find('a').attr('href');
+    });
   });
 });

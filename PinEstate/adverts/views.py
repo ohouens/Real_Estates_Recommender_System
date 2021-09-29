@@ -12,6 +12,11 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 
 def index(request):
+    """
+    request:
+    Home page, show a set of real estates to the user.
+    Check or make an unique key as a cookie to identify the user.
+    """
     result = []
     client = Connect.get_connection()
     db = client.grand_paris_estates_unified
@@ -61,3 +66,42 @@ def detail(request, estate_id):
 
 def pin(request, estate_id):
     return HttpResponse("To pin estate %s" % estate_id)
+
+def join(request, estate_id, target_id):
+    """
+    request:
+    estate_id: the ID of the item of the page the user is
+    target_id: The ID of the item the user click on
+    Add the click action from one item to another item of an user
+    in the database.
+    """
+    #Connect to the mongodb to be able to update add the action
+    client = Connect.get_connection()
+    db = client.grand_paris_estates_users
+    #check if the user is new or already have an array of actions
+    if not request.COOKIES.get("user"):
+        pass
+    #Find the user first and his array of actions item-item
+    user_id = request.COOKIES["user"]
+    cursor = db.inventory.find_one({"user":user_id})
+    #Update the database to add the action from this user
+    items_history = dict()
+    if("action" in cursor and "items_history" in cursor["action"]):
+        items_history = cursor["action"]["items_history"]
+        if(estate_id in items_history):
+            items_history[estate_id].append(target_id)
+        else:
+            items_history[estate_id] = [target_id]
+    else:
+        items_history[estate_id] = [target_id]
+    db.inventory.update_one(
+        {"user":user_id},
+        {"$set": {"action.items_history":items_history}}
+    )
+    return HttpResponse("user {} saved {} to {}".format(user_id, estate_id, target_id))
+
+def views(request, estate_id):
+    client = Connect.get_connection()
+    db = client.grand_paris_estates_users
+    if not request.COOKIES.get("user"):
+        pass
