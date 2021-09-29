@@ -100,8 +100,29 @@ def join(request, estate_id, target_id):
     )
     return HttpResponse("user {} saved {} to {}".format(user_id, estate_id, target_id))
 
-def views(request, estate_id):
+def view(request, estate_id):
+    """
+    request:
+    estate_id: the ID of the item of the page the user is
+    Add the click action of the user to see the original content of the
+    item in the database
+    """
     client = Connect.get_connection()
     db = client.grand_paris_estates_users
     if not request.COOKIES.get("user"):
         pass
+    #Find the user first and his array of actions item-item
+    user_id = request.COOKIES["user"]
+    cursor = db.inventory.find_one({"user":user_id})
+    #Update the database to add the action from this user
+    views_history = dict()
+    if("action" in cursor and "views_history" in cursor["action"]):
+        views_history = cursor["action"]["views_history"]
+        views_history.append(estate_id)
+    else:
+        views_history = [estate_id]
+    db.inventory.update_one(
+        {"user":user_id},
+        {"$set": {"action.views_history":views_history}}
+    )
+    return HttpResponse("user {} views {}".format(user_id, estate_id))

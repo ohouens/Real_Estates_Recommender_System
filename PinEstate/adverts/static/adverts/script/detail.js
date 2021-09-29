@@ -5,7 +5,10 @@ $(function(){
 
   $("#pin a").click(function(e){
     e.preventDefault();
-    alert('add click to database');
+    link = $(this);
+    $.get("view/", function(data){
+      window.open(link.attr("href"), "_blank");
+    });
   });
 
   $(".item").click(function(e){
