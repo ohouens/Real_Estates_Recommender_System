@@ -6,6 +6,8 @@ import numpy as np
 
 from scipy import spatial
 
+import random
+
 class CFLearning():
     """
     Collaborative Filtering Learning class
@@ -35,7 +37,7 @@ class CFLearning():
         """
         result = []
         db = client.grand_paris_estates_unified
-        cursor = db.inventory.find({})
+        cursor = db.inventory.find({"image": {"$ne":float('nan')}})
         for inventory in cursor:
             result.append(str(inventory["_id"]))
         return result
@@ -59,11 +61,11 @@ class CFLearning():
                     result.at[user["user"], view] += 2
         return result
 
-    def user_similarity(self, user, thereshold=0.8, movie_dimension=5, result_dimension=3):
+    def user_similarity(self, user, movie_dimension=5, result_dimension=3):
         """
         user: string -> The user which we will be searching other simular users
-        thereshold: born to accept users on the list
-        dimension: Maximum number of movies to calculate the distance
+        movie_dimension: Maximum number of movies to calculate the distance
+        result_dimension: Maximum number of similar users
         return a list of users with a similarity score of thereshold or plus
         """
         result = {}
@@ -71,5 +73,25 @@ class CFLearning():
         sub_matrix = self.matrix.drop(user)[row.index]
         sub_matrix = sub_matrix.sub(sub_matrix.mean(axis=1), axis=0)
         for index, row_bis in sub_matrix.iterrows():
-            result[index] = spatial.distance.cosine(row.tolist(), row_bis.tolist())
-        return pd.Series(data=result, index=list(result)).nlargest(result_dimension).index.tolist()
+            result[index] = 1 - spatial.distance.cosine(row.tolist(), row_bis.tolist())
+        return pd.Series(data=result, index=list(result)).nlargest(result_dimension)
+
+    def recommended_item(self, user, similar_users, result_dimension=20):
+        """
+        user: string -> The user which we will be recommended items
+        similar_user: pd.Series -> users who are similar to the main users with their similarity score
+        """
+        result = []
+        if similar_users.dropna().empty:
+            #send random items
+            return random.sample(self.items, result_dimension)
+        else:
+            #send items with best scores among the most similar users
+            sub_matrix = self.matrix.loc[similar_users.index.tolist(), :]
+            user_rating = sub_matrix * similar_users
+            user_rating = (user_rating.sum(axis=1)/similar_users.sum()).nlargest(result_dimension)
+            return user_rating.index.tolist()
+
+    def filtering(self, user, movie_dimension, result_dimension):
+        similarity = self.user_similarity(user, movie_dimension, result_dimension)
+        return self.recommended_item(user, similarity, result_dimension)
