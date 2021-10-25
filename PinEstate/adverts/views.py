@@ -23,10 +23,10 @@ def index(request):
     client = Connect.get_connection()
     db = client.grand_paris_estates_unified
     context = dict()
-    matrix = dict()
     cf = CFLearning()
-    matrix["content"] = cf.matrix
-    print(matrix["content"])
+    scores_df = cf.matrix
+    # print(scores_df.loc[:, (scores_df != 0).any(axis=0)])
+    # print(cf.user_similarity(user="e55dccf92e46beb6c062cda20b811b", movie_dimension=7))
     #process for new uew users. Show random items
     if not request.COOKIES.get("user"):
         cursor = db.inventory.find({"image": {"$ne":float('nan')}})
@@ -48,7 +48,7 @@ def index(request):
             to_add = inventory
             to_add["id"] = str(inventory["_id"])
             result.append(to_add)
-        context = {"latest_estate_list": random.sample(result,20), "user":request.COOKIES['user'], "matrix":matrix}
+        context = {"latest_estate_list": random.sample(result,20), "user":request.COOKIES['user']}
         response = render(request, "adverts/index.html", context)
         return response
 
