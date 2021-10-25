@@ -11,6 +11,8 @@ from .connect import Connect
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
+from .learning import CFLearning
+
 def index(request):
     """
     request:
@@ -21,6 +23,11 @@ def index(request):
     client = Connect.get_connection()
     db = client.grand_paris_estates_unified
     context = dict()
+    matrix = dict()
+    cf = CFLearning()
+    matrix["content"] = cf.matrix
+    print(matrix["content"])
+    #process for new uew users. Show random items
     if not request.COOKIES.get("user"):
         cursor = db.inventory.find({"image": {"$ne":float('nan')}})
         for inventory in cursor:
@@ -34,17 +41,38 @@ def index(request):
         user_db = client.grand_paris_estates_users
         user_db.inventory.insert_one({"user":key})
         return response
+    #process for old users. Show items based on collaborative filtering
     else:
         cursor = db.inventory.find({"image": {"$ne":float('nan')}})
         for inventory in cursor:
             to_add = inventory
             to_add["id"] = str(inventory["_id"])
             result.append(to_add)
-        context = {"latest_estate_list": random.sample(result,20), "user":request.COOKIES['user']}
+        context = {"latest_estate_list": random.sample(result,20), "user":request.COOKIES['user'], "matrix":matrix}
         response = render(request, "adverts/index.html", context)
         return response
 
 def detail(request, estate_id):
+    #save the preview in the database
+    client = Connect.get_connection()
+    db = client.grand_paris_estates_users
+    if not request.COOKIES.get("user"):
+        pass
+    #Find the user first and his array of actions item-item
+    user_id = request.COOKIES["user"]
+    cursor = db.inventory.find_one({"user":user_id})
+    #Update the database to add the action from this user
+    previews_history = dict()
+    if("action" in cursor and "previews_history" in cursor["action"]):
+        previews_history = cursor["action"]["previews_history"]
+        previews_history.append(estate_id)
+    else:
+        previews_history = [estate_id]
+    db.inventory.update_one(
+        {"user":user_id},
+        {"$set": {"action.previews_history":previews_history}}
+    )
+    #generate the detailed page
     try:
         client = Connect.get_connection()
         db = client.grand_paris_estates_unified
