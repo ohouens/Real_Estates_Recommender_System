@@ -1,5 +1,6 @@
 from .connect import Connect
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 
 import pandas as pd
 import numpy as np
@@ -13,36 +14,36 @@ class CFLearning():
     Collaborative Filtering Learning class
     """
     def __init__(self):
-        client = Connect.get_connection()
-        self.users = self.all_users(client)
-        self.items = self.all_items(client)
-        self.matrix = self.produce_matrix(client, self.users, self.items)
+        self.client = Connect.get_connection()
+        self.users = self.all_users()
+        self.items = self.all_items()
+        self.matrix = self.produce_matrix(self.users, self.items)
 
-    def all_users(self, client):
+    def all_users(self):
         """
         client: the mongodb client
         return the list of all users of the database
         """
         result = []
-        db = client.grand_paris_estates_users
+        db = self.client.grand_paris_estates_users
         cursor = db.inventory.find({})
         for inventory in cursor:
             result.append(inventory["user"])
         return result
 
-    def all_items(self, client):
+    def all_items(self):
         """
         client: the mongodb client
         return the list of all items of the database
         """
         result = []
-        db = client.grand_paris_estates_unified
+        db = self.client.grand_paris_estates_unified
         cursor = db.inventory.find({"image": {"$ne":float('nan')}})
         for inventory in cursor:
             result.append(str(inventory["_id"]))
         return result
 
-    def produce_matrix(self, client, users, items):
+    def produce_matrix(self, users, items):
         """
         client: the mongodb client
         users: the list of all the users of the database
@@ -50,7 +51,7 @@ class CFLearning():
         create the score matrix based on a user item approche
         """
         result = pd.DataFrame(data=np.zeros((len(users), len(items))), index=users, columns=items)
-        db = client.grand_paris_estates_users
+        db = self.client.grand_paris_estates_users
         cursor = db.inventory.find({})
         for user in cursor:
             if "action" in user and "previews_history" in user["action"]:
@@ -89,9 +90,18 @@ class CFLearning():
             #send items with best scores among the most similar users
             sub_matrix = self.matrix.loc[similar_users.index.tolist(), :]
             user_rating = sub_matrix * similar_users
-            user_rating = (user_rating.sum(axis=1)/similar_users.sum()).nlargest(result_dimension)
+            user_rating = (user_rating.sum(axis=0)/similar_users.sum()).nlargest(result_dimension)
             return user_rating.index.tolist()
 
     def filtering(self, user, movie_dimension, result_dimension):
         similarity = self.user_similarity(user, movie_dimension, result_dimension)
-        return self.recommended_item(user, similarity, result_dimension)
+        items = self.recommended_item(user, similarity, result_dimension)
+        to_check = [ObjectId(item) for item in items]
+        result = []
+        db = self.client.grand_paris_estates_unified
+        cursor = db.inventory.find({"_id": {"$in": to_check}})
+        for inventory in cursor:
+            temp = inventory
+            temp["id"] = str(inventory["_id"])
+            result.append(temp)
+        return result

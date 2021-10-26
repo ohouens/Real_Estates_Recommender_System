@@ -26,13 +26,8 @@ def index(request):
     cf = CFLearning()
     #process for new uew users. Show random items
     if not request.COOKIES.get("user"):
-        cursor = db.inventory.find({"image": {"$ne":float('nan')}})
-        for inventory in cursor:
-            to_add = inventory
-            to_add["id"] = str(inventory["_id"])
-            result.append(to_add)
         key = binascii.b2a_hex(os.urandom(15)).decode("utf-8")
-        context = {"latest_estate_list": random.sample(result,20), "user":"000"}
+        context = {"latest_estate_list": cf.filtering("f9260e183c6493921948c4731c85e8", 5, 20), "user":"000"}
         response = render(request, "adverts/index.html", context)
         response.set_cookie("user", key)
         user_db = client.grand_paris_estates_users
@@ -40,12 +35,7 @@ def index(request):
         return response
     #process for old users. Show items based on collaborative filtering
     else:
-        cursor = db.inventory.find({"image": {"$ne":float('nan')}})
-        for inventory in cursor:
-            to_add = inventory
-            to_add["id"] = str(inventory["_id"])
-            result.append(to_add)
-        context = {"latest_estate_list": random.sample(result,20), "user":request.COOKIES['user']}
+        context = {"latest_estate_list": cf.filtering(request.COOKIES['user'], 5, 20), "user":request.COOKIES['user']}
         response = render(request, "adverts/index.html", context)
         return response
 
@@ -73,18 +63,12 @@ def detail(request, estate_id):
     try:
         client = Connect.get_connection()
         db = client.grand_paris_estates_unified
-        result = []
-        recommendation = db.inventory.find({"image": {"$ne":float('nan')}})
-        for inventory in recommendation:
-            to_add = inventory
-            to_add["id"] = str(inventory["_id"])
-            result.append(to_add)
-        estate_list = random.sample(result,3)
+        cf = CFLearning()
         cursor = db.inventory.find_one({"_id":ObjectId(estate_id)})
         cursor["rooms"] = int(cursor["rooms"])
         cursor["id"] = str(cursor["_id"])
         cursor["eperm2"] = int(int(cursor["price"][:-2].replace(" ",""))/int(cursor["size"]))
-        context = {"cursor":cursor, "estate_list":estate_list}
+        context = {"cursor":cursor, "estate_list":cf.filtering(request.COOKIES['user'], 5, 3)}
     except Exception:
         raise Http404("Estate not found")
     return render(request, "adverts/detail.html", context)
