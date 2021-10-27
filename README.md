@@ -14,7 +14,7 @@ The gathering of the data can be done at regular intervals and automated to have
 <br>
 ## II - Making the Website
 Once we have adverts stored in a database we can make a website that will show them to the user. The website is done in the the directory [_PinEstate_](PinEstate). The website is done using django but the database used is in mongoDB because we have unstructured data, so sqlite and the model systems are not used. However we can still used this model or another if wanted to, it is a matter of opinion.<br>
-The most important thing to do in the website is to save the action of each user. To do that without having our user to registered on our website, we make a cookie that stored a unique key, this key is then store in our database. At each action of our user, we store this action in our database.<br>
+The most important thing to do in the website is to save actions of each user. To do that without having our user to registered on our website, we make a cookie that stored a unique key, this key is then store in our database. At each action of our user, we store this action in our database.<br>
 In this repository there is 3 actions:<br>
   - The user click on a advert to see his detail page from the home page<br>
   - The user click on the link that redirect in the original website of the advert to see more details<br>
