@@ -16,8 +16,8 @@ from .learning import CFLearning
 def index(request):
     """
     request:
-    Home page, show a set of real estates to the user.
-    Check or make an unique key as a cookie to identify the user.
+    Home page, show a set of real estate properties to the user.
+    Check and make an unique key as a cookie to identify the user.
     """
     result = []
     client = Connect.get_connection()
@@ -27,7 +27,7 @@ def index(request):
     #process for new uew users. Show random items
     if not request.COOKIES.get("user"):
         key = binascii.b2a_hex(os.urandom(15)).decode("utf-8")
-        context = {"latest_estate_list": cf.filtering("f9260e183c6493921948c4731c85e8", 5, 20), "user":"000"}
+        context = {"latest_estate_list": cf.filtering("random", 5, 20), "user":"000"}
         response = render(request, "adverts/index.html", context)
         response.set_cookie("user", key)
         user_db = client.grand_paris_estates_users
@@ -45,10 +45,10 @@ def detail(request, estate_id):
     db = client.grand_paris_estates_users
     if not request.COOKIES.get("user"):
         pass
-    #Find the user first and his array of actions item-item
+    #Find the user first and his array of events
     user_id = request.COOKIES["user"]
     cursor = db.inventory.find_one({"user":user_id})
-    #Update the database to add the action from this user
+    #Update the database to add the event from this user
     previews_history = dict()
     if("action" in cursor and "previews_history" in cursor["action"]):
         previews_history = cursor["action"]["previews_history"]
@@ -80,17 +80,17 @@ def join(request, estate_id, target_id):
     """
     request:
     estate_id: the ID of the item of the page the user is
-    target_id: The ID of the item the user click on
-    Add the click action from one item to another item of an user
-    in the database.
+    target_id: The ID of the item the user clicks on
+    Add the click event from one item to another item of an user
+    into the database.
     """
-    #Connect to the mongodb to be able to update add the action
+    #Connect to the mongodb to be able to add the event
     client = Connect.get_connection()
     db = client.grand_paris_estates_users
-    #check if the user is new or already have an array of actions
+    #check if the user is new or already have an array of events
     if not request.COOKIES.get("user"):
         pass
-    #Find the user first and his array of actions item-item
+    #Find the user first and his array of events
     user_id = request.COOKIES["user"]
     cursor = db.inventory.find_one({"user":user_id})
     #Update the database to add the action from this user
@@ -120,10 +120,10 @@ def view(request, estate_id):
     db = client.grand_paris_estates_users
     if not request.COOKIES.get("user"):
         pass
-    #Find the user first and his array of actions item-item
+    #Find the user first and his array of events
     user_id = request.COOKIES["user"]
     cursor = db.inventory.find_one({"user":user_id})
-    #Update the database to add the action from this user
+    #Update the database to add the event from this user
     views_history = dict()
     if("action" in cursor and "views_history" in cursor["action"]):
         views_history = cursor["action"]["views_history"]

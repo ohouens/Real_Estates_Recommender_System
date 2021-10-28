@@ -21,7 +21,6 @@ class CFLearning():
 
     def all_users(self):
         """
-        client: the mongodb client
         return the list of all users of the database
         """
         result = []
@@ -33,7 +32,6 @@ class CFLearning():
 
     def all_items(self):
         """
-        client: the mongodb client
         return the list of all items of the database
         """
         result = []
@@ -45,10 +43,9 @@ class CFLearning():
 
     def produce_matrix(self, users, items):
         """
-        client: the mongodb client
         users: the list of all the users of the database
         items: the list of all the items of the database
-        create the score matrix based on a user item approche
+        create the score matrix which is User-Based
         """
         result = pd.DataFrame(data=np.zeros((len(users), len(items))), index=users, columns=items)
         db = self.client.grand_paris_estates_users
@@ -64,10 +61,10 @@ class CFLearning():
 
     def user_similarity(self, user, movie_dimension=5, result_dimension=3):
         """
-        user: string -> The user which we will be searching other simular users
-        movie_dimension: Maximum number of movies to calculate the distance
-        result_dimension: Maximum number of similar users
-        return a list of users with a similarity score of thereshold or plus
+        user: string -> The user for whom we will be searching other simular users
+        movie_dimension: Maximum number of movies to compute the cosine similarity in the score matrix.
+        result_dimension: Maximum number of similar users.
+        return the list of the most similar users to the original user
         """
         result = {}
         row = self.matrix.loc[user].nlargest(movie_dimension)
@@ -80,7 +77,8 @@ class CFLearning():
     def recommended_item(self, user, similar_users, result_dimension=20):
         """
         user: string -> The user which we will be recommended items
-        similar_user: pd.Series -> users who are similar to the main users with their similarity score
+        similar_users: pd.Series -> users that are similar to the original user with their similarity score as value (between 0 and 1)
+        result_dimension: Maximum number of item's IDs to returns.
         """
         result = []
         if similar_users.dropna().empty:
@@ -94,8 +92,10 @@ class CFLearning():
             return user_rating.index.tolist()
 
     def filtering(self, user, movie_dimension, result_dimension):
-        similarity = self.user_similarity(user, movie_dimension, result_dimension)
-        items = self.recommended_item(user, similarity, result_dimension)
+        items = random.sample(self.items, result_dimension)
+        if(user != "random"):
+            similarity = self.user_similarity(user, movie_dimension, result_dimension)
+            items = self.recommended_item(user, similarity, result_dimension)
         to_check = [ObjectId(item) for item in items]
         result = []
         db = self.client.grand_paris_estates_unified
