@@ -25,5 +25,4 @@ In this repository there are 3 events:<br>
 
 To recommend items we used a collaborative filtering algorithm that is located in the file [_PinEstate/adverts/learning.py_](PinEstate/adverts/learning.py).
 Using the event of each user that is stored in the database, we can produce a score matrix to count events for each user for each item. 
-With this matrix we can, for each user, find users that are similar by computing the cosine similarity between users based off the N preferred items of the original user from whom we want to recommend items.<br> 
-Then we recommend new items to this user based off the score that similar users gave to other items.
+With this matrix we can, for each user, find users that are similar by computing the cosine similarity between users based off the N preferred items of the original user from whom we want to recommend items. Then we recommend new items to this user based off the score that similar users gave to other items.
